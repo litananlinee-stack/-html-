@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>เว็บไซต์ปรึกษาปัญหาสุขภาพจิต</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fc;
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+  header {
+    background-color: #4caf50;
+    color: white;
+    text-align: center;
+    padding: 15px;
+  }
+  .container {
+    width: 80%;
+    max-width: 600px;
+    margin: 30px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  h2 {
+    text-align: center;
+  }
+  .form-group {
+    margin-bottom: 15px;
+  }
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  select, textarea, input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  input[type="submit"] {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+  }
+  input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  .response {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #e9f5e9;
+    border-radius: 8px;
+    border: 1px solid #4caf50;
+    display: none;
+  }
+  .response p {
+    font-size: 16px;
+    white-space: pre-line;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>เว็บไซต์ปรึกษาปัญหาสุขภาพจิต</h1>
+</header>
+
+<div class="container">
+  <h2>กรุณากรอกข้อมูลปัญหาสุขภาพจิตของคุณ</h2>
+  <form id="healthForm">
+    <div class="form-group">
+      <label for="problemType">ประเภทปัญหาสุขภาพจิต</label>
+      <select id="problemType" name="problemType" required>
+        <option value="เครียด">เครียด</option>
+        <option value="วิตกกังวล">วิตกกังวล</option>
+        <option value="ซึมเศร้า">ซึมเศร้า</option>
+        <option value="ปัญหาความสัมพันธ์">ปัญหาความสัมพันธ์</option>
+        <option value="โรควิตกกังวลทั่วไป">โรควิตกกังวลทั่วไป</option>
+        <option value="โรคเครียดหลังเหตุการณ์ที่กระทบกระเทือน">โรคเครียดหลังเหตุการณ์ที่กระทบกระเทือน (PTSD)</option>
+        <option value="นอนไม่หลับ">นอนไม่หลับ</option>
+        <option value="โรคการรับประทานอาหาร">โรคการรับประทานอาหาร</option>
+        <option value="ภาวะหมดไฟ">ภาวะหมดไฟ</option>
+        <option value="ความพึงพอใจในตัวเองต่ำ">ความพึงพอใจในตัวเองต่ำ</option>
+        <option value="ย้ำคิดย้ำทำ">ย้ำคิดย้ำทำ (OCD)</option>
+        <option value="ความผิดปกติจากการใช้สาร">ความผิดปกติจากการใช้สาร</option>
+        <option value="ความผิดปกติของบุคลิกภาพ">ความผิดปกติของบุคลิกภาพ</option>
+        <option value="อารมณ์สองขั้ว">อารมณ์สองขั้ว (Bipolar Disorder)</option>
+        <option value="อื่นๆ">อื่นๆ</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="severity">ระดับความรุนแรง</label>
+      <select id="severity" name="severity" required>
+        <option value="น้อย">น้อย</option>
+        <option value="ปานกลาง">ปานกลาง</option>
+        <option value="มาก">มาก</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="additionalInfo">คำอธิบายเพิ่มเติม</label>
+      <textarea id="additionalInfo" name="additionalInfo" rows="4" placeholder="กรุณาใส่รายละเอียดเพิ่มเติมเกี่ยวกับปัญหาของคุณ"></textarea>
+    </div>
+
+    <div class="form-group">
+      <input type="submit" value="ส่งข้อมูล" />
+    </div>
+  </form>
+
+  <div id="response" class="response">
+    <p><strong>คำแนะนำจากเรา:</strong></p>
+    <p id="adviceText"></p>
+  </div>
+</div>
+
+<div class="container" id="quizContainer">
+  <h2>แบบทดสอบสุขภาพจิต 10 ข้อ</h2>
+  <form id="quizForm">
+    <div class="form-group">
+      <label>1. รู้สึกเครียดหรือวิตกกังวลบ่อยครั้งหรือไม่?</label>
+      <select name="q1" required>
+        <option value="">-- เลือกคำตอบ --</option>
+        <option value="0">ไม่เคย</option>
+        <option value="1">บางครั้ง</option>
+        <option value="2">บ่อย</option>
+        <option value="3">ตลอดเวลา</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>2. รู้สึกซึมเศร้า หรือหมดแรงสนใจสิ่งที่เคยชอบ?</label>
+      <select name="q2" required>
+        <option value="">-- เลือกคำตอบ --</option>
+        <option value="0">ไม่เคย</option>
+        <option value="1">บางครั้ง</option>
+        <option value="2">บ่อย</option>
+        <option value="3">ตลอดเวลา</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>3. มีปัญหาการนอน เช่น นอนไม่หลับหรือนอนมากเกินไป?</label>
+      <select name="q3" required>
+        <option value="">-- เลือกคำตอบ --</option>
+        <option value="0">ไม่เคย</option>
+        <option value="1">บางครั้ง</option>
+        <option value="2">บ่อย</option>
+        <option value="3">ตลอดเวลา</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>4. รู้สึกหงุดหงิดง่ายหรือโกรธง่าย?</label>
+      <select name="q4" required>
+        <option value="">-- เลือกคำตอบ --</option>
+        <option value="0">ไม่เคย</option>
+        <option value="1">บางครั้ง</option>
+        <option value="2">บ่อย</option>
+        <option value="3">ตลอดเวลา</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>5. รู้สึกกังวลเกี่ยวกับอนาคตหรือสิ่งต่าง ๆ ที่ไม่สามารถควบคุมได้?</label>
+      <select name="q5" required>
+        <option value="">-- เลือกคำตอบ --</option>
+        <option value="0">ไม่เคย</option>
+        <option value="1">บางครั้ง</option>
+        <option value="2">บ่อย</option>
+        <option value="3">ตลอดเวลา</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>6. มีความคิดย้ำคิดย้ำทำ หรือทำสิ่งซ้ำ ๆ โดยไม่สามารถควบคุมได้?</label>
+      <select name="q6" required>
+        <option value="">-- เลือกคำตอบ --</option>
+        <option value="0">ไม่เคย</option>
+        <option value="1">บางครั้ง</option>
+        <option value="2">บ่อย</option>
+        <option value="3">ตลอดเวลา</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>7. มีความรู้สึกหมดแรงหรือหมดไฟในการทำงาน/กิจกรรมประจำวัน?</label>
+      <select name="q7" required>
+        <option value="">-- เลือกคำตอบ --</option>
+        <option value="0">ไม่เคย</option>
+        <option value="1">บางครั้ง</option>
+        <option value="2">บ่อย</option>
+        <option value="3">ตลอดเวลา</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>8. รู้สึกไม่มีคุณค่าในตัวเองหรือวิจารณ์ตัวเองรุนแรง?</label>
+      <select name="q8" required>
+        <option value="">-- เลือกคำตอบ --</option>
+        <option value="0">ไม่เคย</option>
+        <option value="1">บางครั้ง</option>
+        <option value="2">บ่อย</option>
+        <option value="3">ตลอดเวลา</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>9. มีปัญหาความสัมพันธ์กับเพื่อน ครอบครัว หรือคนรัก?</label>
+      <select name="q9" required>
+        <option value="">-- เลือกคำตอบ --</option>
+        <option value="0">ไม่เคย</option>
+        <option value="1">บางครั้ง</option>
+        <option value="2">บ่อย</option>
+        <option value="3">ตลอดเวลา</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>10. รู้สึกเครียดหรือกังวลต่อปัญหาสุขภาพร่างกายของตัวเอง?</label>
+      <select name="q10" required>
+        <option value="">-- เลือกคำตอบ --</option>
+        <option value="0">ไม่เคย</option>
+        <option value="1">บางครั้ง</option>
+        <option value="2">บ่อย</option>
+        <option value="3">ตลอดเวลา</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <input type="submit" value="ดูผลการประเมิน" />
+    </div>
+  </form>
+
+  <div id="quizResult" class="response">
+    <p><strong>ผลการประเมินสุขภาพจิตของคุณ:</strong></p>
+    <p id="resultText"></p>
+  </div>
+
+  <div style="text-align:center; margin-top:10px;">
+    <button id="toggleMode">สลับโหมดกลางวัน/กลางคืน</button>
+  </div>
+</div>
+
+<script>
+  document.getElementById("healthForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const problemType = document.getElementById("problemType").value;
+    const severity = document.getElementById("severity").value;
+    const additionalInfo = document.getElementById("additionalInfo").value.trim();
+
+    let advice = "";
+
+    switch(problemType) {
+      case "เครียด":
+        advice = "ความเครียดเป็นสิ่งที่ทุกคนเจอได้ แต่หากปล่อยไว้นานอาจส่งผลเสียต่อสุขภาพกายและใจ " +
+                 "คุณสามารถเริ่มจากการหากิจกรรมผ่อนคลาย เช่น การออกกำลังกายเบาๆ การทำสมาธิ หรือการฟังเพลงที่ชอบ " +
+                 "นอกจากนี้การจัดการเวลา พักผ่อนให้เพียงพอ และพูดคุยกับคนที่ไว้ใจได้ก็ช่วยลดความเครียดได้มาก.";
+        break;
+      case "วิตกกังวล":
+        advice = "อาการวิตกกังวลเป็นเรื่องปกติ แต่หากเกิดขึ้นบ่อยจนรบกวนชีวิตประจำวันควรใส่ใจ " +
+                 "คุณอาจลองฝึกการหายใจลึก ๆ ฝึกสติ (Mindfulness) และหากิจกรรมที่ทำให้จิตใจสงบ เช่น วาดรูปหรือปลูกต้นไม้ " +
+                 "การปรับมุมมองต่อสถานการณ์ให้เป็นกลางขึ้นก็ช่วยให้รู้สึกเบาลง.";
+        break;
+      case "ซึมเศร้า":
+        advice = "ภาวะซึมเศร้าไม่ใช่ความอ่อนแอ แต่เป็นภาวะที่ต้องการการดูแลอย่างจริงจัง " +
+                 "ควรเปิดใจพูดคุยกับคนใกล้ชิดหรือผู้เชี่ยวชาญเพื่อขอความช่วยเหลือ " +
+                 "การจัดกิจวัตรประจำวันที่เป็นระเบียบ ออกกำลังกายเบา ๆ และให้เวลากับสิ่งที่ตัวเองเคยชอบสามารถช่วยได้บางส่วน " +
+                 "อย่างไรก็ตามหากอาการรุนแรง การพบจิตแพทย์เป็นสิ่งสำคัญ.";
+        break;
+      default:
+        advice = "หากคุณมีอาการอื่น ๆ ที่ไม่แน่ใจ แนะนำให้บันทึกอาการและเข้าพบผู้เชี่ยวชาญด้านสุขภาพจิต " +
+                 "เพื่อรับการประเมินและคำแนะนำเฉพาะตัว.";
+        break;
+    }
+
+    if (additionalInfo.length > 0) {
+      advice += "<br><br>นอกจากนี้ จากคำอธิบายเพิ่มเติมของคุณ: \"" + additionalInfo + "\"<br>" +
+                "ลองบันทึกอาการเหล่านี้ไว้เพื่อใช้เป็นข้อมูลประกอบการพูดคุยกับผู้เชี่ยวชาญ จะช่วยให้ได้รับคำแนะนำที่ตรงจุดมากขึ้น.";
+    }
+
+    if (severity === "มาก") {
+      advice += "<br><br><strong>เนื่องจากระดับความรุนแรงสูง กรุณาติดต่อผู้เชี่ยวชาญหรือโรงพยาบาลจิตเวชโดยเร็ว " +
+                "และหากมีความคิดทำร้ายตัวเอง ควรโทรสายด่วนสุขภาพจิต 1323 ทันที.</strong>";
+    } else if (severity === "ปานกลาง") {
+      advice += "<br><br>ควรติดตามอาการอย่างใกล้ชิด หากไม่ดีขึ้นภายใน 2-3 สัปดาห์ แนะนำให้ปรึกษาผู้เชี่ยวชาญ.";
+    } else {
+      advice += "<br><br>แม้อาการจะยังไม่รุนแรง แต่ควรใส่ใจสุขภาพจิต ดูแลตัวเองสม่ำเสมอ และหากิจกรรมผ่อนคลายที่เหมาะกับคุณ.";
+    }
+
+    const responseDiv = document.getElementById("response");
+    const adviceText = document.getElementById("adviceText");
+    adviceText.innerHTML = advice;
+    responseDiv.style.display = "block";
+  });
+
+  document.getElementById("quizForm").addEventListener("submit", function(event){
+    event.preventDefault();
+    let totalScore = 0;
+    const formData = new FormData(this);
+    for (let [key, value] of formData.entries()) {
+      totalScore += parseInt(value);
+    }
+
+    let result = "";
+    if(totalScore <= 10){
+      result = "ระดับสุขภาพจิตของคุณอยู่ในเกณฑ์ดี สามารถจัดการความเครียดและอารมณ์ได้ดี.";
+    } else if(totalScore <= 20){
+      result = "ระดับสุขภาพจิตของคุณปานกลาง มีบางอาการที่ควรใส่ใจและปรับพฤติกรรมเพื่อสุขภาพจิตที่ดีขึ้น.";
+    } else{
+      result = "ระดับสุขภาพจิตของคุณสูง แนะนำให้ปรึกษาผู้เชี่ยวชาญเพื่อประเมินอาการและรับคำแนะนำเฉพาะตัว.";
+    }
+
+    document.getElementById("resultText").innerHTML = result;
+    document.getElementById("quizResult").style.display = "block";
+  });
+
+  // Dark/Light mode
+  let darkMode = false;
+  document.getElementById("toggleMode").addEventListener("click", function(){
+    darkMode = !darkMode;
+    if(darkMode){
+      document.body.style.backgroundColor = "#1e1e1e";
+      document.body.style.color = "#f4f4f4";
+      document.querySelectorAll(".container").forEach(c => {
+        c.style.backgroundColor = "#2c2c2c";
+        c.style.color = "#f4f4f4";
+      });
+    } else{
+      document.body.style.backgroundColor = "#f4f7fc";
+      document.body.style.color = "#333";
+      document.querySelectorAll(".container").forEach(c => {
+        c.style.backgroundColor = "white";
+        c.style.color = "#333";
+      });
+    }
+  });
+</script>
+
+</body>
+</html>
